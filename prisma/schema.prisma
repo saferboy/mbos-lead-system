@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id          Int           @id @default(autoincrement())
+  title       String?
+  description String?
+  full_name   String
+  phone       String
+  email       String?
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  LeadTask    LeadTask[]
+  LeadArchive LeadArchive[]
+  status_id   Int
+  target_id   Int
+  Target      Target        @relation(fields: [target_id], references: [id])
+  LeadStatus  LeadStatus    @relation(fields: [status_id], references: [id])
+}
+
+model LeadStatus {
+  id       Int    @id @default(autoincrement())
+  name     String @unique
+  position Int
+  lead     Lead[]
+}
+
+model TargetType {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  TargetLink  TargetLink[]
+}
+
+model Target {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique
+  description String?
+  lifetime    DateTime?
+
+  price Float?
+
+  status TargetStatus @default(active)
+
+  updated_at   DateTime     @updatedAt
+  created_at   DateTime     @default(now())
+  Lead         Lead[]
+  TargetLink   TargetLink[]
+}
+
+model TargetLink {
+  id Int @id @default(autoincrement())
+
+  type_id    Int
+  TargetType TargetType @relation(fields: [type_id], references: [id])
+
+  target_id Int
+  Target    Target @relation(fields: [target_id], references: [id])
+
+  link    String @unique
+  payload String
+}
+
+enum TargetStatus {
+  active
+  deleted
+  archived
+}
+
+model LeadArchive {
+  id          Int      @id @default(autoincrement())
+  lead_id     Int
+  comment     String?
+  prev_status Int
+  next_status Int?
+  updated_at  DateTime @updatedAt
+  Lead        Lead     @relation(fields: [lead_id], references: [id])
+}
+
+model LeadTask {
+  id         Int            @id @default(autoincrement())
+  lead_id    Int
+  deadline   DateTime
+  time       DateTime
+  comment    String
+  status     LeadTaskStatus @default(pending)
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  Lead       Lead           @relation(fields: [lead_id], references: [id])
+}
+
+enum LeadTaskStatus {
+  successfull
+  rejected
+  pending
+}

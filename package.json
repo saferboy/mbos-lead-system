@@ -1,0 +1,43 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r module-alias/register ./out/server.js",
+    "start:d": "yarn nodemon -r module-alias/register ./out/server.js",
+    "build": "yarn tsc && yarn tsc-alias",
+    "dev": "yarn nodemon --legacy-watch src/server.ts",
+    "test": "echo \"No test available\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/express": "^4.17.21",
+    "@types/joi": "^17.2.3",
+    "@types/module-alias": "^2.0.2",
+    "@types/node": "^20.8.3",
+    "@types/swagger-jsdoc": "^6.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "nodemon": "^3.0.1",
+    "prettier": "^3.1.0",
+    "prisma": "^5.4.1",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.8",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.1",
+    "@types/cors": "^2.8.17",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "joi": "^17.11.1"
+  }
+}
