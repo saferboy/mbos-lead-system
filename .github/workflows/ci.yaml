@@ -2,7 +2,7 @@ name: Dev CD
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
 
 jobs:
   build:

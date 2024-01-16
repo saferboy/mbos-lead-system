@@ -17,8 +17,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd ./app/mbos-lead-system
-            pm2 delete server
+            cd /app/mbos-lead-system
             git fetch
             git pull
             yarn install
