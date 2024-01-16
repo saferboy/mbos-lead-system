@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn add -g ts-node typescript
-      - run: yarn ci
-      - run: yarn install
-      - run: yarn test
+      - run: npm i -g ts-node typescript
+      - run: npm ci
+      - run: npm install
+      - run: npm test
