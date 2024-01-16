@@ -1,25 +1,27 @@
-import express from 'express'
-import cors from 'cors'
-import dotenv from 'dotenv'
-import path from 'path'
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import path from "path";
 
+import { v1 } from "./api";
 
-import { v1 } from './api'
+dotenv.config();
 
+const app = express();
 
-dotenv.config()
+const port = process.env.PORT ?? 8080;
 
-const app = express()
+app.use(express.static(path.join(__dirname, "../static")));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-const port = process.env.PORT ?? 8080
+app.get("/", (req, res) => {
+  res.sendFile("../static/index.html");
+});
 
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(cors())
-
-app.use('/api/v1', v1)
+app.use("/api/v1", v1);
 
 app.listen(port, () => {
-	console.log(`Server is running. Host: http://localhost:${port}`)
-})
+  console.log(`Server is running. Host: http://localhost:${port}`);
+});

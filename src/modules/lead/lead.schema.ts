@@ -1,13 +1,12 @@
-import Joi from "joi"
+import Joi from "joi";
 
 import { Lead } from "@prisma/client";
 
 import { LeadBody } from "./lead.dto";
 
 export const leadCreateScheme = Joi.object<LeadBody>({
-  title: Joi.string().min(3).optional(),
-  description: Joi.string().min(3).optional(),
-  email: Joi.string().min(3).optional(),
+  select: Joi.any(),
+  target_id: Joi.any(),
   full_name: Joi.string().min(3).required(),
   phone: Joi.string().required(),
 });

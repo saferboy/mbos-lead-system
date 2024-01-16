@@ -1,19 +1,17 @@
-import { Router } from 'express'
+import { Router } from "express";
 
 import {
-	leadArchiveRouter,
-	leadRouter,
-	leadStatusRouter,
-	targetRouter,
-} from '../modules'
+  leadRouter,
+  targetRouter,
+  targetLinkRouter,
+  targetTypeRouter,
+} from "../modules";
 
-const router = Router()
+const router = Router();
 
+router.use("/lead", leadRouter);
+router.use("/target", targetRouter);
+router.use("/target-link", targetLinkRouter);
+router.use("/target-type", targetTypeRouter);
 
-router.use('/lead-status', leadStatusRouter)
-router.use('/lead', leadRouter)
-router.use('/target', targetRouter)
-router.use('/lead-archive', leadArchiveRouter)
-
-
-export default router
+export default router;
