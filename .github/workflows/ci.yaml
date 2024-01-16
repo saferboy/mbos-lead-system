@@ -1,26 +1,31 @@
-name: Check Application
+name: Deploy Development
 
 on:
-  pull_request:
-    branches:
-      - dev
+  push:
+    branches: [dev]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Node.js
-        uses: actions/setup-node@v1.4.4
+      - name: Connect VPS and deploy changes
+        uses: appleboy/ssh-action@master
         with:
-          node-version: 18.12.1
-      - uses: actions/cache@v3
-        with:
-          path: /home/runner/.cache/yarn/v6
-          key: ${{ runner.os }}-yarn-cache-v2-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install
-      - name: Lint
-        run: yarn lint --fix
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ./app/practicum-backend
+            pm2 delete server
+            git checkout dev
+            git fetch
+            git pull
+            yarn install
+            rm .env
+            ./scripts/start.dev.sh
+            rm -rf out
+            yarn seed
+            yarn build
+            pm2 start out/server.js

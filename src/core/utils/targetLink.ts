@@ -1,8 +1,7 @@
 interface GeneratedLinkParams {
 	uid: string
 	target_id: string
-	payload: string
-	lifetime: string
+	type_id: string
 }
 
 export const targetLink = {
@@ -15,11 +14,10 @@ export const targetLink = {
 
 		const uid = url.searchParams.get('uid')
 		const target_id = url.searchParams.get('target_id')
-		const payload = url.searchParams.get('payload')
-		const lifetime = url.searchParams.get('lifetime')
+		const type_id = url.searchParams.get('type_id')
 
-		if (uid && target_id && payload && lifetime) {
-			return { uid, target_id, payload, lifetime }
+		if (uid && target_id && type_id) {
+			return { uid, target_id, type_id}
 		} else {
 			return null
 		}

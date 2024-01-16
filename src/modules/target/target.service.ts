@@ -5,7 +5,7 @@ import { createError, targetLink } from '../../core'
 import { randomUUID } from 'crypto'
 
 export class TargetService {
-	static async create(name: string, lifeTime?: Date) {
+	static async create(name: string, description?: string, lifeTime?: Date, ) {
 		const target = prisma.target.upsert({
 			where: {
 				name
@@ -13,7 +13,7 @@ export class TargetService {
 			update: {},
 			create: {
 				name,
-				// type_id: 1,
+				description,
 				lifetime: lifeTime
 			}
 		})
@@ -59,23 +59,5 @@ export class TargetService {
 			}
 		})
 		return target
-	}
-
-	static async generateLink(target_id: number, payload: string) {
-		const isExists = await this.findById(target_id)
-
-		if (!isExists) throw createError('Target not found')
-
-		const uid = randomUUID()
-		const generatedLink = targetLink.serialize({
-			uid,
-			payload,
-			lifetime: isExists.lifetime
-				? new Date(isExists.lifetime).toString()
-				: 'never',
-			target_id: `${isExists.id}`
-		})
-
-		return generatedLink
 	}
 }
