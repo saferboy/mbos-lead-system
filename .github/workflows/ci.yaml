@@ -1,27 +1,25 @@
-name: Dev CD
+name: Node.js CI
 
 on:
   push:
-    branches: [dev]
+    branches: 
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     steps:
-      - name: Connect VPS and deploy changes
-        uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd /app/mbos-lead-system/
-            git pull
-            yarn install
-            yarn prisma db push
-            yarn run build
-            pm2 restart 0
-
-
+          node-version: ${{ matrix.node-version }}
+      - run: yarn add -g ts-node typescript
+      - run: yarn ci
+      - run: yarn install
+      - run: yarn test
