@@ -27,7 +27,7 @@ export const create: RequestHandler = async (req, res, next) => {
     console.log(message)
     bot.sendMessage(chatId, message);
 
-    res.redirect("hello world");
+    res.redirect("<h1>hello world</h1>");
   } catch (e) {
     console.log(e);
     res.send(error);
