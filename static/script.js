@@ -33,13 +33,11 @@ form.addEventListener('submit', (ev) => {
 function getSearchParams() {
   const search = new URLSearchParams(window.location.search)
   const uid = search.get('uid')
-  const target_id = search.get('target_id')
   const type_id = search.get('type_id')
 
   if (uid && target_id && type_id) {
     return {
       uid,
-      target_id,
       type_id,
     }
   }

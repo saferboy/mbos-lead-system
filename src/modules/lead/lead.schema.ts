@@ -6,7 +6,6 @@ import { LeadBody } from "./lead.dto";
 
 export const leadCreateScheme = Joi.object<LeadBody>({
   select: Joi.any(),
-  target_id: Joi.any(),
   full_name: Joi.string().min(3).required(),
   phone: Joi.string().required(),
 });
