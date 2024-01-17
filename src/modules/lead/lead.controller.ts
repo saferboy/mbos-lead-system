@@ -9,8 +9,8 @@ import { LeadBody } from "./lead.dto";
 import { error } from "console";
 import path from "path";
 
-const botToken = "6748516425:AAF4Q6fgeTLTHSMtO2VZEInml_stL15azAY";
-const bot = new TelegramBot(botToken, { polling: true });
+// const botToken = "6748516425:AAF4Q6fgeTLTHSMtO2VZEInml_stL15azAY";
+// const bot = new TelegramBot(botToken, { polling: true });
 
 export const create: RequestHandler = async (req, res, next) => {
   try {
@@ -22,20 +22,19 @@ export const create: RequestHandler = async (req, res, next) => {
     const lead = await LeadService.create({
       leadData: { ...body, target_id: +url.target_id },
     });
+    console.log(lead);
 
     const chatId = 6317986035;
     const message = `Yangi lead yaratildi!\nID: ${lead.id}\nTitle: ${lead.title}\nDescription: ${lead.description}\nFull Name: ${lead.full_name}\nPhone: ${lead.phone}\nEmail: ${lead.email}`;
-    console.log(message)
-    bot.sendMessage(chatId, message);
+    console.log(message);
+    // bot.sendMessage(chatId, message);
 
-    res.redirect(path.join(__dirname, "send", "/index.html"));
+    res.redirect('/');
   } catch (e) {
     console.log(e);
     res.send(error);
   }
 };
-
-
 
 export const remove: RequestHandler = async (req, res, next) => {
   const id = req.params.id;

@@ -35,7 +35,7 @@ function getSearchParams() {
   const uid = search.get('uid')
   const type_id = search.get('type_id')
 
-  if (uid && target_id && type_id) {
+  if (uid && type_id) {
     return {
       uid,
       type_id,
