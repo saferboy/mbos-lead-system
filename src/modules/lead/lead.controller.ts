@@ -7,6 +7,7 @@ import LeadService from "./lead.service";
 import TelegramBot from "node-telegram-bot-api";
 import { LeadBody } from "./lead.dto";
 import { error } from "console";
+import path from "path";
 
 const botToken = "6748516425:AAF4Q6fgeTLTHSMtO2VZEInml_stL15azAY";
 const bot = new TelegramBot(botToken, { polling: true });
@@ -27,12 +28,14 @@ export const create: RequestHandler = async (req, res, next) => {
     console.log(message)
     bot.sendMessage(chatId, message);
 
-    res.redirect("<h1>hello world</h1>");
+    res.redirect(path.join(__dirname, "send", "/index.html"));
   } catch (e) {
     console.log(e);
     res.send(error);
   }
 };
+
+
 
 export const remove: RequestHandler = async (req, res, next) => {
   const id = req.params.id;
