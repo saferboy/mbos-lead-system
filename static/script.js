@@ -13,12 +13,12 @@ form.addEventListener('submit', (ev) => {
   const params = getSearchParams()
   if (!params) return
   console.log(data)
-  fetch(`/api/v1/lead${window.location.search}`, {
+  fetch(`http://31.129.99.227:3000/api/v1/lead${window.location.search}`, {
     method: 'POST',
     body: JSON.stringify({
       ...data,
       target_id: params.target_id,
-    } ),
+    }),
     headers: {
       'Content-Type': 'application/json',
     },
