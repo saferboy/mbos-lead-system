@@ -6,6 +6,13 @@ import { TargetTypeService } from "./target-type.service";
 export const create: RequestHandler = async (req, res, next) => {
   try {
     const { name, description } = req.body;
+    const found = await TargetTypeService.findByName(name);
+
+    if (found) {  
+      return res.status(400).json({
+        message: "Target by name has already been created",
+      });
+    }
     const targetType = await TargetTypeService.create(name, description);
     res.status(201).json({
       message: "TargetType created successfully",
@@ -35,8 +42,8 @@ export const getById: RequestHandler = async (req, res, next) => {
 
     if (!targetType) {
       return res.status(404).json({
-        message: "Target type not found" 
-      })
+        message: "Target type not found",
+      });
     }
 
     return res.status(200).json({
@@ -44,7 +51,7 @@ export const getById: RequestHandler = async (req, res, next) => {
       targetType: {
         id: targetType.id,
         name: targetType.name,
-        description: targetType.description
+        description: targetType.description,
       },
     });
   } catch (err) {
@@ -71,20 +78,16 @@ export const update: RequestHandler = async (req, res, next) => {
   }
 };
 
-export const remove: RequestHandler = async (
-  req,
-  res,
-  next
-) => {
+export const remove: RequestHandler = async (req, res, next) => {
   try {
     const id = +req.params.id;
-    const old = await TargetTypeService.findById(id)
+    const old = await TargetTypeService.findById(id);
     if (!old) {
       return res.status(404).json({
-        message: 'target type not found'
-      })
+        message: "target type not found",
+      });
     }
-    
+
     const targetType = await TargetTypeService.remove(id);
     res.json({
       message: "TargetType deleted successfully",

@@ -9,13 +9,14 @@ import {
   getAll,
   update,
 } from "./target-link.controller";
+import { permission } from "src/core/middleware/role-permission";
 
 const router = Router();
-router.post("/", create);
-router.get("/:id", getById);
-router.get("/", getAll);
+router.post("/", permission(["marketer", "supervisor"]), create);
+router.get("/:id", permission(["marketer", "supervisor"]), getById);
+router.get("/", permission(["marketer", "supervisor"]), getAll);
 
-router.put("/:id", update);
-router.put("/:id", remove);
+router.put("/:id", permission(["marketer", "supervisor"]), update);
+router.put("/:id", permission(["marketer", "supervisor"]), remove);
 
 export default router;
