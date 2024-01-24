@@ -5,10 +5,11 @@ import {
   targetRouter,
   targetLinkRouter,
   targetTypeRouter,
+  authRouter
 } from "../modules";
 
 const router = Router();
-
+router.use("/auth", authRouter)
 router.use("/lead", leadRouter);
 router.use("/target", targetRouter);
 router.use("/target-link", targetLinkRouter);

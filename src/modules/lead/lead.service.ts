@@ -7,7 +7,7 @@ import { LeadBody } from "./lead.dto";
 export default class LeadService {
   static async create(params: { leadData: LeadBody & {target_id: number}}) {
     const { leadData } = params;
-
+    
     const lead = await prisma.lead.create({
       data: leadData,
     });

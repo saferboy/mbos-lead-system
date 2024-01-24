@@ -20,6 +20,15 @@ export class TargetTypeService {
     return type;
   }
 
+  static async findByName(name: string) {
+    const type = prisma.targetType.findUnique({
+      where: {
+        name
+      }
+    })
+    return type
+  }
+
   static async findById(id: number) {
     const type = prisma.targetType.findUnique({
       where: {

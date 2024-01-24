@@ -10,19 +10,29 @@ import {
   leadUpdateScheme,
   leadUpdateStatusScheme,
 } from "./lead.schema";
+import { permission } from "../../core/middleware/role-permission";
 
 const router = Router();
 
-router.use("/lead-stats", leadStatsRouter);
+router.use(
+  "/lead-stats",
+  permission(["marketer", "supervisor"]),
+  leadStatsRouter
+);
 
-router.post("/",  create);
+router.post("/", permission(["marketer", "supervisor"]), create);
 
-router.delete("/:id", remove);
+router.delete("/:id", permission(["marketer", "supervisor"]), remove);
 
-router.get("/", getAll);
+router.get("/", permission(["marketer", "supervisor"]), getAll);
 
-router.get("/:id", findById);
+router.get("/:id", permission(["marketer", "supervisor"]), findById);
 
-router.put("/:id", bodyValidate(leadUpdateScheme), update);
+router.put(
+  "/:id",
+  permission(["marketer", "supervisor"]),
+  bodyValidate(leadUpdateScheme),
+  update
+);
 
 export default router;
